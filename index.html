@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="world" width="1000" height="500" style="border: 1px solid black;"></canvas>
+
+    <script>
+        // Inisialisasi Canvas
+        let canvas = document.getElementById("world");
+        let context = canvas.getContext("2d");
+
+        context.fillStyle = "skyblue";
+        context.fillRect(0, canvas.height / 2 - 250, canvas.width, canvas.height)
+        context.fillStyle = "green";
+        context.fillRect(0, canvas.height / 2 + 150, canvas.width, canvas.height)
+
+
+
+        function createDome(x, y, r, color, withEdge = true){
+            // membuat kubah
+            context.fillStyle = color;
+            context.beginPath();
+            context.arc(x, y, r, Math.PI, 4 + Math.PI);
+
+            // menutup kubah 
+            context.moveTo(x+r, y);
+            context.lineTo(x-r, y);
+
+            // mewarnai dan menggaris kubah
+            context.lineWidth = r/10;
+            context.fill();
+
+            if(withEdge){
+                // context.stroke();
+                context.beginPath();
+                context.moveTo(x, y - r - (r/4));
+                context.stroke()
+            }
+        }
+        
+        createDome(canvas.width / 1 - (2 * 100), canvas.height / 2100, 35, "skyblue");
+        createDome(canvas.width / 2, canvas.height / 2, 100, "lavender");
+        createDome(canvas.width / 2 + (2 * 100), canvas.height/2100, 35, "skyblue");
+
+        function createWall(x, y, width, height, color) {
+            context.fillStyle = color;
+            context.beginPath();
+            context.rect(x, y, width, height);
+            context. lineWidth = width/10; 
+            // context.stroke();
+            context.fill();
+        }
+    
+        
+        createWall(canvas.width / 2 + 140, canvas.height / 3, 70, 200, "black");
+        createWall(canvas.width / 2 - 200, canvas.height / 3, 70, 200, "black");
+        
+        
+        function createWall(x, y, width, height, color) {
+            context.fillStyle = color;
+            context.beginPath();
+            context.rect(x, y, width, height);
+            context. lineWidth = width/10; 
+            // context.stroke();
+            context.fill();
+        }
+        
+        createWall(canvas.width / 2 - 100, canvas.height / 2, 200, 200, "black");
+        createWall(canvas.width / 2 + 100, canvas.height / 2, 150, 200, "black");
+        createWall(canvas.width / 2 - 100 - 150, canvas.height / 2, 150, 200, "black");
+       
+
+        function createDoor(x, y, width, height, color){
+            createDome(x, canvas.height / 2+ height, width / 2, color, false);
+            createWall(x - width / 2, canvas.height / 2 + height, width, height, color);
+        }
+
+        // Membuat pintu
+        createDoor(canvas.width / 2 - 175, canvas.height / 2 + 100, 75, 100, "gray");
+        createDoor(canvas.width / 2, canvas.height / 2 + 100, 100, 100, "gray");
+        createDoor(canvas.width / 2 + 175, canvas.height / 2 + 100, 75, 100, "gray");
+
+        // Membuat tulisan
+        context.fillStyle = "black";
+        context.font = "15pt Arial";
+        context.fillText("Masjid Baiturrahman", canvas.width / 2 - 90, canvas.height / 2 + 35, 200)
+
+        // Membuat tangga.
+        createWall(canvas.width / 2 - 100 - 100 - 75, canvas.height / 2 + 200, 550, 15, "lavender");
+        createWall(canvas.width / 2 - 100 - 100 - 75 - 25, canvas.height / 2 + 200 + 15 , 600, 15, "lavender");
+
+        // Membuat background langit
+        canvas.style.backgroundColor ="skyblue";
+    </script>
+</body>
+</html>
